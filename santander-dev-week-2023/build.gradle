@@ -1,38 +1,25 @@
-plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.2'
-	id 'io.spring.dependency-management' version '1.1.2'
-}
+package me.dio;
 
-group = 'me.dio'
-version = '0.0.1-SNAPSHOT'
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-java {
-	sourceCompatibility = '17'
-}
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 
-repositories {
-	mavenCentral()
-}
+/**
+ * Initializes our RESTful API.
+ *
+ * <p>
+ * The {@link OpenAPIDefinition} annotation was used to enable HTTPS in the Swagger UI.
+ * For more details, see the following post on Stack Overflow:
+ * https://stackoverflow.com/a/71132608/3072570
+ * </p>
+ */
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	// OpenAPI (Swagger) https://github.com/springdoc/springdoc-openapi
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
-
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.jar {
-	manifest {
-		attributes["Main-Class"] = "me.dio.Application"
+@OpenAPIDefinition(servers = {@Server(url = "/", description = "Default Server URL")})
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
 	}
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }
